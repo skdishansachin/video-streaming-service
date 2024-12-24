@@ -16,8 +16,9 @@ export class VideoStreamingStack extends cdk.Stack {
       bucketName: `react-web-application-bucket-${stackName}`,
       websiteIndexDocument: 'index.html',
       websiteErrorDocument: 'error.html', // TODO: Create error.html
+      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
       autoDeleteObjects: true, // Change on production
-      removalPolicy: cdk.RemovalPolicy.DESTROY,
+      removalPolicy: cdk.RemovalPolicy.DESTROY, // Change on production
     });
 
     const reactWebApplicationDistribution = new cloudfront.Distribution(this, 'ReactWebApplicationDistribution', {
