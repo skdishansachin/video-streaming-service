@@ -6,7 +6,7 @@ export class VideoStreamingStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    const reactWenApplicationBucket = new s3.Bucket(this, 'ReactWebApplicationBucket', {
+    const reactWebApplicationBucket = new s3.Bucket(this, 'ReactWebApplicationBucket', {
       bucketName: `react-web-application-bucket-${this.stackName}`,
       websiteIndexDocument: 'index.html',
       websiteErrorDocument: 'error.html', // TODO: Create error.html
