@@ -43,7 +43,7 @@ export class VideoStreamingStack extends cdk.Stack {
     });
 
     new BucketDeployment(this, 'ReactWebApplicationDeployment', {
-      sources: [Source.asset('../frontend/build')],
+      sources: [Source.asset('../frontend/dist')],
       destinationBucket: reactWebApplicationBucket,
       distribution: reactWebApplicationDistribution,
       distributionPaths: ['/*'],
