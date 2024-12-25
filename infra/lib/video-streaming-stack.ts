@@ -14,8 +14,8 @@ export class VideoStreamingStack extends cdk.Stack {
 
     const reactWebApplicationBucket = new s3.Bucket(this, 'ReactWebApplicationBucket', {
       bucketName: `react-web-application-bucket-${stackName}`,
-      websiteIndexDocument: 'index.html',
       publicReadAccess: false,
+      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
       autoDeleteObjects: true, // Change on production
       removalPolicy: cdk.RemovalPolicy.DESTROY, // Change on production
     });
@@ -26,6 +26,14 @@ export class VideoStreamingStack extends cdk.Stack {
         origin: new S3StaticWebsiteOrigin(reactWebApplicationBucket),
         viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
       },
+      errorResponses: [
+        {
+          httpStatus: 403,
+          responseHttpStatus: 200,
+          responsePagePath: '/index.html',
+          ttl: cdk.Duration.minutes(5),
+        },
+      ],
     });
 
     new BucketDeployment(this, 'ReactWebApplicationDeployment', {
