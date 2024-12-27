@@ -17,6 +17,7 @@ export class PipelineStack extends Stack {
                     'npm install -g pnpm',
                 ],
                 commands: [
+                    'npm install -g pnpm',
                     'cd infra',
                     'pnpm install',
                     'npx cdk deploy',
