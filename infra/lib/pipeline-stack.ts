@@ -17,7 +17,6 @@ export class PipelineStack extends Stack {
                     'npx cdk synth'
                 ],
                 primaryOutputDirectory: 'infra/cdk.out',
-                buildEnvironment:
             })
         });
 
