@@ -13,7 +13,6 @@ export class VideoStreamingStack extends Stack {
     const stackName = this.stackName.toLowerCase();
 
     const reactWebApplicationBucket = new s3.Bucket(this, 'ReactWebApplicationBucket', {
-      bucketName: `react-web-application-bucket-${stackName}`,
       publicReadAccess: false,
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
       autoDeleteObjects: true, // Change on production
