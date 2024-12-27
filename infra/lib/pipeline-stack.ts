@@ -13,11 +13,11 @@ export class PipelineStack extends Stack {
                 input: CodePipelineSource.gitHub('skdishansachin/video-streaming-service', 'main'),
                 commands: [
                     'cd infra',
-                    'npm install -g pnpm',
-                    'pnpm install',
+                    'npm install',
                     'npx cdk synth'
                 ],
                 primaryOutputDirectory: 'infra/cdk.out',
+                buildEnvironment:
             })
         });
 
