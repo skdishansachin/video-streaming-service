@@ -25,14 +25,6 @@ export class VideoStreamingStack extends Stack {
         origin: new S3StaticWebsiteOrigin(reactWebApplicationBucket),
         viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
       },
-      errorResponses: [
-        {
-          httpStatus: 403,
-          responseHttpStatus: 200,
-          responsePagePath: '/index.html',
-          ttl: Duration.minutes(5),
-        },
-      ],
     });
 
     new BucketDeployment(this, 'ReactWebApplicationDeployment', {
