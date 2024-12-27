@@ -13,8 +13,13 @@ export class PipelineStack extends Stack {
                 input: CodePipelineSource.gitHub('skdishansachin/video-streaming-service', 'main'),
                 installCommands: ['npm install -g aws-cdk'],
                 commands: [
+                    'cd frontend',
+                    'npm ci',
+                    'npm run build',
+                    'cd ..',
                     'cd infra',
                     'npm ci',
+                    'npm run build',
                     'cdk deploy',
                 ],
                 primaryOutputDirectory: 'infra/cdk.out',
