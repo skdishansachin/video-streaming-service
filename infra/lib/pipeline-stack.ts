@@ -14,18 +14,16 @@ export class PipelineStack extends Stack {
                 input: CodePipelineSource.gitHub('skdishansachin/video-streaming-service', 'main'),
                 installCommands: [
                     'npm install -g aws-cdk',
-                    'npm install -g pnpm',
                 ],
                 commands: [
-                    'npm install -g pnpm',
                     'cd infra',
-                    'pnpm install',
+                    'npm install',
                     'npx cdk deploy',
                 ],
                 primaryOutputDirectory: 'infra/cdk.out',
-            })
+            }),
         });
 
-        pipeline.addStage(new VideoStreamingStage(this, 'VideoStreamingStage'));
+        pipeline.addStage(new VideoStreamingStage(this, 'Development'));
     }
 }
