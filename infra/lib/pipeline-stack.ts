@@ -15,8 +15,7 @@ export class PipelineStack extends Stack {
                 commands: [
                     'cd infra',
                     'npm ci',
-                    'npm run build',
-                    'npx cdk deploy',
+                    'cdk deploy',
                 ],
                 primaryOutputDirectory: 'infra/cdk.out',
             }),
