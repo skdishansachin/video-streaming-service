@@ -1,15 +1,6 @@
 import { Stack, Stage, StackProps, StageProps } from 'aws-cdk-lib';
 import { CodePipeline, CodePipelineSource, ShellStep } from 'aws-cdk-lib/pipelines';
 import { Construct } from 'constructs';
-import { VideoStreamingStack } from './video-streaming-stack';
-
-class VideoStreamingStackStage extends Stage {
-    constructor(scope: Construct, id: string, props?: StageProps) {
-        super(scope, id, props);
-
-        new VideoStreamingStack(this, 'VideoStreamingStack');
-    }
-}
 
 export class PipelineStack extends Stack {
     constructor(scope: Construct, id: string, props?: StackProps) {
@@ -28,10 +19,6 @@ export class PipelineStack extends Stack {
                 ]
             })
         });
-
-        pipeline.addStage(new VideoStreamingStackStage(this, 'test', {
-            stageName: 'Test'
-        }));
     }
 
 }
