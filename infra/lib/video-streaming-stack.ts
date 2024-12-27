@@ -1,7 +1,7 @@
 import { Stack, StackProps, RemovalPolicy, Duration, CfnOutput } from 'aws-cdk-lib';
 import * as s3 from 'aws-cdk-lib/aws-s3';
 import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
-import { S3StaticWebsiteOrigin } from 'aws-cdk-lib/aws-cloudfront-origins';
+import { S3Origin } from 'aws-cdk-lib/aws-cloudfront-origins';
 import { ViewerProtocolPolicy } from 'aws-cdk-lib/aws-cloudfront';
 import { Construct } from 'constructs';
 import { BucketDeployment, Source } from 'aws-cdk-lib/aws-s3-deployment';
@@ -13,9 +13,9 @@ export class VideoStreamingStack extends Stack {
     const stackName = this.stackName.toLowerCase();
 
     const reactWebApplicationBucket = new s3.Bucket(this, 'ReactWebApplicationBucket', {
-      websiteIndexDocument: 'index.html',
-      websiteErrorDocument: 'index.html', // Change on production
-      publicReadAccess: false,
+      // websiteIndexDocument: 'index.html',
+      // websiteErrorDocument: 'index.html', // Change on production
+      // publicReadAccess: false,
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
       autoDeleteObjects: true, // Change on production
       removalPolicy: RemovalPolicy.DESTROY, // Change on production
@@ -24,7 +24,7 @@ export class VideoStreamingStack extends Stack {
     const reactWebApplicationDistribution = new cloudfront.Distribution(this, 'ReactWebApplicationDistribution', {
       defaultRootObject: 'index.html',
       defaultBehavior: {
-        origin: new S3StaticWebsiteOrigin(reactWebApplicationBucket),
+        origin: new S3Origin(reactWebApplicationBucket),
         viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
       },
       errorResponses: [
@@ -32,7 +32,6 @@ export class VideoStreamingStack extends Stack {
           httpStatus: 403,
           responseHttpStatus: 200,
           responsePagePath: '/index.html',
-          ttl: Duration.minutes(5),
         },
       ],
     });
