@@ -1,17 +1,16 @@
 import { Stack, Stage, StackProps, StageProps } from 'aws-cdk-lib';
-import { CodePipeline, CodePipelineSource, ShellStep } from 'aws-cdk-lib/pipelines';
+import { CodeBuildStep, CodePipeline, CodePipelineSource, ShellStep } from 'aws-cdk-lib/pipelines';
 import { Construct } from 'constructs';
+import { VideoStreamingStage } from './pipeline-stage';
 
 export class PipelineStack extends Stack {
     constructor(scope: Construct, id: string, props?: StackProps) {
         super(scope, id, props);
 
-        const source = CodePipelineSource.gitHub('skdishansachin/video-streaming-service', 'main');
-
         const pipeline = new CodePipeline(this, 'ReactAppPipeline', {
             pipelineName: 'ReactAppPipeline',
-            synth: new ShellStep('Synth', {
-                input: source,
+            synth: new CodeBuildStep('Synth', {
+                input: CodePipelineSource.gitHub('skdishansachin/video-streaming-service', 'main'),
                 commands: [
                     'pnpm install',
                     'pnpm run build',
@@ -19,6 +18,8 @@ export class PipelineStack extends Stack {
                 ]
             })
         });
+
+        pipeline.addStage(new VideoStreamingStage(this, 'VideoStreamingStage'));
     }
 
 }
