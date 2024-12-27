@@ -1,18 +1,18 @@
-import * as cdk from 'aws-cdk-lib';
+import { Stack, Stage, StackProps, StageProps } from 'aws-cdk-lib';
 import { CodePipeline, CodePipelineSource, ShellStep } from 'aws-cdk-lib/pipelines';
 import { Construct } from 'constructs';
 import { VideoStreamingStack } from './video-streaming-stack';
 
-class VideoStreamingStackStage extends cdk.Stage {
-    constructor(scope: Construct, id: string, props?: cdk.StageProps) {
+class VideoStreamingStackStage extends Stage {
+    constructor(scope: Construct, id: string, props?: StageProps) {
         super(scope, id, props);
 
         new VideoStreamingStack(this, 'VideoStreamingStack');
     }
 }
 
-export class PipelineStack extends cdk.Stack {
-    constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+export class PipelineStack extends Stack {
+    constructor(scope: Construct, id: string, props?: StackProps) {
         super(scope, id, props);
 
         const source = CodePipelineSource.gitHub('skdishansachin/video-streaming-service', 'main');

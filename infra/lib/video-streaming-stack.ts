@@ -1,4 +1,4 @@
-import * as cdk from 'aws-cdk-lib';
+import { Stack, StackProps, RemovalPolicy, Duration, CfnOutput } from 'aws-cdk-lib';
 import * as s3 from 'aws-cdk-lib/aws-s3';
 import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
 import { S3StaticWebsiteOrigin } from 'aws-cdk-lib/aws-cloudfront-origins';
@@ -6,8 +6,8 @@ import { ViewerProtocolPolicy } from 'aws-cdk-lib/aws-cloudfront';
 import { Construct } from 'constructs';
 import { BucketDeployment, Source } from 'aws-cdk-lib/aws-s3-deployment';
 
-export class VideoStreamingStack extends cdk.Stack {
-  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+export class VideoStreamingStack extends Stack {
+  constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
     const stackName = this.stackName.toLowerCase();
@@ -17,7 +17,7 @@ export class VideoStreamingStack extends cdk.Stack {
       publicReadAccess: false,
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
       autoDeleteObjects: true, // Change on production
-      removalPolicy: cdk.RemovalPolicy.DESTROY, // Change on production
+      removalPolicy: RemovalPolicy.DESTROY, // Change on production
     });
 
     const reactWebApplicationDistribution = new cloudfront.Distribution(this, 'ReactWebApplicationDistribution', {
@@ -31,7 +31,7 @@ export class VideoStreamingStack extends cdk.Stack {
           httpStatus: 403,
           responseHttpStatus: 200,
           responsePagePath: '/index.html',
-          ttl: cdk.Duration.minutes(5),
+          ttl: Duration.minutes(5),
         },
       ],
     });
@@ -43,13 +43,13 @@ export class VideoStreamingStack extends cdk.Stack {
       distributionPaths: ['/*'],
     });
 
-    new cdk.CfnOutput(this, 'ReactWebApplicationBucketOutputURL', {
+    new CfnOutput(this, 'ReactWebApplicationBucketOutputURL', {
       value: reactWebApplicationDistribution.distributionDomainName,
       description: 'React Web Application Bucket Output URL',
       exportName: `${stackName}-ReactWebApplicationBucketOutputURL`,
     });
 
-    new cdk.CfnOutput(this, 'ReactWebApplicationBucketName', {
+    new CfnOutput(this, 'ReactWebApplicationBucketName', {
       value: reactWebApplicationBucket.bucketName,
       description: 'React Web Application Bucket Name',
       exportName: `${stackName}-ReactWebApplicationBucketName`,
