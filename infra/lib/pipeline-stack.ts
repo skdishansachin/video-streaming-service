@@ -1,5 +1,5 @@
 import { Stack, StackProps } from 'aws-cdk-lib';
-import { CodePipeline, CodePipelineSource, ShellStep } from 'aws-cdk-lib/pipelines';
+import { CodeBuildStep, CodePipeline, CodePipelineSource } from 'aws-cdk-lib/pipelines';
 import { Construct } from 'constructs';
 import { VideoStreamingStage } from './pipeline-stage';
 
@@ -9,7 +9,7 @@ export class PipelineStack extends Stack {
 
         const pipeline = new CodePipeline(this, 'ReactAppPipeline', {
             pipelineName: 'ReactAppPipeline',
-            synth: new ShellStep('Synth', {
+            synth: new CodeBuildStep('Synth', {
                 input: CodePipelineSource.gitHub('skdishansachin/video-streaming-service', 'main'),
                 commands: [
                     'cd infra',
