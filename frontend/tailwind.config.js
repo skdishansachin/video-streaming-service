@@ -1,6 +1,6 @@
-import { Config } from "tailwindcss";
 import defaultTheme from "tailwindcss/defaultTheme";
 
+/** @type {import('tailwindcss').Config} */
 export default {
   content: [
     './index.html',
@@ -13,5 +13,5 @@ export default {
     extend: {},
   },
   plugins: [],
-} satisfies Config;
+};
 
