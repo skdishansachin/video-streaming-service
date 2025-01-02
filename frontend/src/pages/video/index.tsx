@@ -1,5 +1,5 @@
 import { PaperClipIcon } from "@heroicons/react/24/outline";
-import VideoJS from "./videojs";
+import VideoPlayer from "./videojs";
 import { useRef } from "react";
 
 const attachments = [
@@ -11,7 +11,7 @@ export default function VideoPage() {
     const playerRef = useRef(null);
 
     const videoJsOptions = {
-        autoplay: true,
+        autoplay: false,
         controls: true,
         responsive: true,
         fluid: true,
@@ -35,9 +35,9 @@ export default function VideoPage() {
     };
 
     return (
-        <>
+        <div>
             <div>
-            <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
+                <VideoPlayer options={videoJsOptions} onReady={handlePlayerReady} />
             </div>
             <section aria-labelledby="applicant-information-title" className="mt-6">
                 <div className="bg-white shadow sm:rounded-lg">
@@ -108,6 +108,6 @@ export default function VideoPage() {
                     </div>
                 </div>
             </section>
-        </>
+        </div>
     )
 }

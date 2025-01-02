@@ -7,7 +7,6 @@ import VideoPage from "./pages/video";
 
 const router = createBrowserRouter([
     {
-        path: '/',
         children: [
             {
                 path: '/login',
@@ -20,19 +19,18 @@ const router = createBrowserRouter([
         ]
     },
     {
-        path: '/',
         element: <DefaultLayout />,
         children: [
             {
-                path: '/app',
+                path: '/',
                 element: <App />
             },
             {
-                path: '/app/:id',
+                path: '/videos/:id',
                 element: <VideoPage />
             }
         ]
-    }
+    },
 ]);
 
 export default router;
